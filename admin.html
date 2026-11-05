@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Painel Administrativo — Amanda Rabelo</title>
+  <link rel="stylesheet" href="admin.css">
+  <script src="content.js"></script>
+  <script src="admin.js" defer></script>
+</head>
+<body>
+  <header class="admin-top">
+    <a href="index.html" class="brand">
+      <span>AR</span>
+      <div><b>Amanda Rabelo</b><small>Painel de conteúdo</small></div>
+    </a>
+    <div class="top-actions">
+      <button type="button" id="logout" class="view-site logout-button" hidden>Sair</button>
+      <a class="view-site" href="index.html" target="_blank" rel="noopener noreferrer">Ver site ↗</a>
+    </div>
+  </header>
+
+  <section id="login-screen" class="login-screen" aria-labelledby="login-title">
+    <form id="login-form" class="login-card" autocomplete="on">
+      <div class="login-mark" aria-hidden="true">AR</div>
+      <p class="overline">ÁREA RESTRITA</p>
+      <h1 id="login-title">Painel Administrativo</h1>
+      <p class="login-intro">Entre com suas credenciais para editar os conteúdos da landing page.</p>
+
+      <label for="login-user">Login</label>
+      <input id="login-user" name="username" type="text" autocomplete="username" required>
+
+      <label for="login-password">Senha</label>
+      <input id="login-password" name="password" type="password" autocomplete="current-password" required>
+
+      <p id="login-error" class="login-error" role="alert" hidden>Login ou senha incorretos. Tente novamente.</p>
+      
+      <button class="button primary login-submit" type="submit">Entrar no dashboard</button>
+      
+      <div style="margin-top: 15px; text-align: center;">
+        <button type="button" id="forgot-password-btn" class="text-button" style="font-size: 12px;">Esqueceu a senha? Recuperar acesso</button>
+      </div>
+
+      <p class="login-security">Aviso: A autenticação é processada através da API Serverless da Netlify com sessão segura.</p>
+      <a class="back-home" href="index.html">← Voltar para o site</a>
+    </form>
+
+    <!-- Form de Recuperação de Acesso -->
+    <form id="recover-form" class="login-card" hidden>
+      <div class="login-mark" aria-hidden="true">AR</div>
+      <p class="overline">RECUPERAÇÃO DE ACESSO</p>
+      <h1>Redefina sua senha</h1>
+      <p class="login-intro">Digite seu usuário ou e-mail cadastrado para receber as instruções.</p>
+
+      <label for="recover-user">Usuário ou E-mail</label>
+      <input id="recover-user" name="userOrEmail" type="text" required>
+
+      <p id="recover-msg" class="notice" hidden></p>
+
+      <button class="button primary login-submit" type="submit">Enviar instrução de recuperação</button>
+      <div style="margin-top: 15px; text-align: center;">
+        <button type="button" id="back-to-login-btn" class="text-button" style="font-size: 12px;">← Voltar para a tela de login</button>
+      </div>
+    </form>
+  </section>
+
+  <main id="dashboard-app" class="admin-layout" hidden>
+    <aside class="sidebar">
+      <p class="overline">ÁREA DE GESTÃO</p>
+      <h1>Seu conteúdo,<br>do seu jeito.</h1>
+      <p>Edite textos, serviços e a foto do perfil sem mexer no código.</p>
+      <div class="status"><span></span> Sessão Ativa</div>
+      <div class="side-note">
+        <b>Importante</b>
+        <p>Ao concluir, clique em <b>"Salvar neste navegador"</b> para aplicar localmente ou em <b>"Exportar content.js"</b> e substitua o arquivo original no servidor para atualizar para todos os visitantes.</p>
+      </div>
+    </aside>
+
+    <section class="editor">
+      <div class="editor-heading">
+        <div>
+          <p class="overline">CONFIGURAÇÕES DO SITE</p>
+          <h2>Editar landing page</h2>
+          <p>As alterações são guardadas neste navegador até você exportar o arquivo final.</p>
+        </div>
+        <button id="reset" class="button secondary">Restaurar original</button>
+      </div>
+
+      <div id="notice" class="notice" role="status" hidden></div>
+
+      <form id="content-form">
+        <section class="panel">
+          <h3>Perfil e identidade</h3>
+          <div class="photo-row">
+            <img id="photo-preview" src="assets/amanda-rabelo.jpeg" alt="Prévia da foto de perfil">
+            <div class="photo-actions">
+              <label for="photo-file" class="button secondary">Trocar foto</label>
+              <input type="file" id="photo-file" accept="image/*" hidden>
+              <p>JPG, PNG ou WebP. A imagem será incluída no arquivo exportado.</p>
+              <button type="button" id="remove-photo" class="text-button">Voltar à foto original</button>
+            </div>
+          </div>
+          <div class="fields two">
+            <label>Nome da marca<input name="brand" required></label>
+            <label>Subtítulo da marca<input name="brandSub"></label>
+            <label>Nome no perfil<input name="profileName" required></label>
+            <label>Descrição profissional<input name="profileRole"></label>
+            <label>Frase do perfil<input name="profileMotto"></label>
+            <label>Instagram (URL completa)<input name="instagram" type="url" placeholder="https://instagram.com/..."></label>
+            <label>WhatsApp com código do país<input name="whatsapp" inputmode="numeric" placeholder="5521999999999"></label>
+            <label>Texto de disponibilidade<input name="availability"></label>
+          </div>
+        </section>
+
+        <section class="panel">
+          <h3>Texto principal</h3>
+          <div class="fields">
+            <label>Chamada superior<input name="kicker"></label>
+            <label>Título — primeira linha<input name="headline1"></label>
+            <label>Título — segunda linha<input name="headline2"></label>
+            <label>Texto de apresentação<textarea name="heroText" rows="3"></textarea></label>
+            <label>Texto do botão principal<input name="primaryCta"></label>
+            <label>Frase de apoio<input name="heroNote"></label>
+          </div>
+        </section>
+
+        <section class="panel">
+          <h3>Diferenciais e serviços</h3>
+          <div class="fields two">
+            <label>Diferencial 1<input name="trust1"></label>
+            <label>Diferencial 2<input name="trust2"></label>
+            <label>Diferencial 3<input name="trust3"></label>
+            <label>Título da seção de serviços<input name="servicesHeading"></label>
+          </div>
+          <label class="full-label">Introdução dos serviços<textarea name="servicesIntro" rows="3"></textarea></label>
+          <div id="services-editor"></div>
+        </section>
+
+        <section class="panel">
+          <h3>Etapas de trabalho</h3>
+          <div id="steps-editor"></div>
+        </section>
+
+        <section class="panel">
+          <h3>Perguntas frequentes</h3>
+          <div id="faqs-editor"></div>
+        </section>
+
+        <section class="panel">
+          <h3>Chamada final</h3>
+          <div class="fields">
+            <label>Texto pequeno<input name="closingEyebrow"></label>
+            <label>Título final<textarea name="closingHeading" rows="2"></textarea></label>
+            <label>Texto do botão final<input name="closingCta"></label>
+          </div>
+        </section>
+
+        <div class="savebar">
+          <span id="save-state">Alterações não exportadas</span>
+          <button type="submit" class="button primary">Salvar neste navegador</button>
+          <button type="button" id="export" class="button export">Exportar content.js</button>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <footer id="dashboard-footer" class="admin-footer" hidden>
+    Painel administrativo ativo · Conectado com Netlify Serverless Auth
+  </footer>
+</body>
+</html>
